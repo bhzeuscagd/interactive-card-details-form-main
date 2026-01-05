@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme{
+
+    --gradient-active: hsl(249, 99%, 64%) to hsl(278, 94%, 30%);
+    --error: hsl(0, 100%, 66%);
+    --gray: hsl(270, 3%, 87%);
+    --gray-2: hsl(212, 12%, 71%);
+    --white: hsl(0, 100%, 100%);
+    --purple: hsl(278, 68%, 11%);
+
+    --font-space: 'Space Grotesk Variable', sans-serif;
+    --font-size: 18px;
+    --font-weight: 500;
+}

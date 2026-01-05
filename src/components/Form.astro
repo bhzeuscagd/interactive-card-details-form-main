@@ -1,0 +1,54 @@
+---
+import Input from "./Inpunt.astro";
+---
+
+<section class="flex flex-col justify-center my-10 mx-5">
+    <form action="post" class="flex flex-col gap-6">
+        <div class="flex flex-col gap-6">
+            <Input
+                id="cardholderName"
+                label="Cardholder Name"
+                name="cardholderName"
+                type="text"
+                placeholder="e.g. Jane Appleseed"
+            />
+            <Input
+                id="cardNumber"
+                label="Card Number"
+                name="cardNumber"
+                type="number"
+                placeholder="e.g. 1234 5678 9123 0000"
+            />
+        </div>
+        <div class="flex flex-row gap-2">
+            <div class="flex flex-row gap-2 items-center justify-between">
+                <Input
+                    class="w-1/2"
+                    id="month"
+                    label="Exp. Date (MM/YY)"
+                    name="month"
+                    type="number"
+                    placeholder="MM"
+                    maxlength="2"
+                />
+                <Input
+                    class="w-1/2"
+                    id="year"
+                    name="year"
+                    type="number"
+                    placeholder="YY"
+                    maxlength="2"
+                />
+            </div>
+
+            <Input
+                id="cvc"
+                label="CVC"
+                name="cvc"
+                type="number"
+                placeholder="e.g. 123"
+            />
+        </div>
+        <button type="submit">Confirm</button>
+    </form>
+</section>

@@ -1,0 +1,32 @@
+---
+const {
+    id,
+    label,
+    name,
+    type = "text",
+    placeholder = "",
+    maxlength = "",
+    class: className,
+} = Astro.props;
+---
+
+<div class={`flex flex-col gap-2 w-full ${className}`}>
+    {
+        label && (
+            <label
+                for={id}
+                class="text-xs text-gray2 uppercase font-semibold tracking-widest w-full "
+            >
+                {label}
+            </label>
+        )
+    }
+    <input
+        type={type}
+        name={name}
+        id={id}
+        placeholder={placeholder}
+        class="w-full h-10 border border-gray text-gray rounded-md px-2"
+        maxlength={maxlength}
+    />
+</div>
