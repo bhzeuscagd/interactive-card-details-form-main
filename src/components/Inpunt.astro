@@ -6,7 +6,9 @@ const {
     type = "text",
     placeholder = "",
     maxlength = "",
+    error = "",
     class: className,
+    required,
 } = Astro.props;
 ---
 
@@ -15,7 +17,7 @@ const {
         label && (
             <label
                 for={id}
-                class="text-xs text-gray2 uppercase font-semibold tracking-widest w-full "
+                class="text-[13.5px] text-gray2 uppercase font-semibold tracking-widest w-full "
             >
                 {label}
             </label>
@@ -28,5 +30,7 @@ const {
         placeholder={placeholder}
         class="w-full h-10 border border-gray text-gray rounded-md px-2"
         maxlength={maxlength}
+        required={required}
     />
+    <span class="text-[var(--error)] text-xs" id={`error-${id}`}>{error}</span>
 </div>
