@@ -10,40 +10,57 @@ import logo from "../assets/images/card-logo.svg";
     class="bg-[url('../assets/images/bg-main-mobile.png')] bg-cover w-full h-52 relative
     lg:bg-[url('../assets/images/bg-main-desktop.png')] lg:h-full lg:w-md"
 >
-    <Image
-        src={cardBack}
-        alt="Card Back"
-        class="absolute top-0 right-0 w-64 h-auto pt-5 pr-3 z-10 lg:min-w-84 lg:-right-40 lg:top-1/2"
-    />
-    <div
-        class="absolute top-0 left-0 w-64 h-auto pt-5 pl-3 z-20 lg:w-84 lg:left-16 lg:top-6"
-    >
+    <div>
         <Image
-            src={cardFront}
-            alt="Card Front"
-            class="w-64 h-auto absolute translate-y-19 lg:w-84"
+            src={cardBack}
+            alt="Card Back"
+            class="absolute top-0 right-0 w-64 h-auto pt-5 pr-3 z-10 lg:min-w-84 lg:-right-40 lg:top-1/2"
         />
-        <div class="z-30 absolute translate-y-20 pt-2 px-4 w-full max-w-none">
+        <span
+            id="PreviewCvv"
+            class="absolute text-white top-0 right-0 w-64 h-auto pt-5 pr-3 z-10 lg:min-w-84 lg:-right-105 lg:top-[62.5%] text-[12px]"
+            >000</span
+        >
+        <div
+            class="absolute top-0 left-0 w-64 h-auto pt-5 pl-3 z-20 lg:w-84 lg:left-16 lg:top-6"
+        >
             <Image
-                src={logo}
-                alt="Logo"
-                width={40}
-                height={40}
-                class="lg:w-16 lg:auto"
+                src={cardFront}
+                alt="Card Front"
+                class="w-64 h-auto absolute translate-y-19 lg:w-84"
             />
-            <p
-                class="text-white translate-y-10 tracking-widest text-[17px] lg:text-[23.4px]"
+            <div
+                class="z-30 absolute translate-y-20 pt-2 px-4 w-full max-w-none"
             >
-                0000 0000 0000 0000
-            </p>
-            <footer
-                class="flex justify-between translate-y-13 lg:translate-y-18"
-            >
-                <p class="text-white uppercase text-[8px] lg:text-xs">
-                    jane appleseed
+                <Image
+                    src={logo}
+                    alt="Logo"
+                    width={40}
+                    height={40}
+                    class="lg:w-16 lg:auto"
+                />
+                <p
+                    id="PreviewNumber"
+                    class="text-white translate-y-10 tracking-widest text-[17px] lg:text-[23.4px]"
+                >
+                    0000 0000 0000 0000
                 </p>
-                <p class="text-white text-[8px] lg:text-xs">00/00</p>
-            </footer>
+                <footer
+                    class="flex justify-between translate-y-13 lg:translate-y-18"
+                >
+                    <p
+                        id="PreviewName"
+                        class="text-white uppercase text-[8px] lg:text-xs"
+                    >
+                        jane appleseed
+                    </p>
+                    <p class="text-white text-[8px] lg:text-xs">
+                        <span id="PreviewMonth">00</span>
+                        <span>/</span>
+                        <span id="PreviewYear">00</span>
+                    </p>
+                </footer>
+            </div>
         </div>
     </div>
 </section>

@@ -2,8 +2,14 @@
 import Input from "./Inpunt.astro";
 ---
 
-<section class="flex flex-col justify-center my-10 mx-5 lg:w-full">
-    <form action="post" class="flex flex-col gap-6 max-w-[320px] lg:mx-auto">
+<section
+    id="form"
+    class="flex flex-col items-center justify-center w-full h-full"
+>
+    <form
+        action="post"
+        class="flex flex-col justify-center gap-6 max-w-[320px] mx-auto lg:mx-auto"
+    >
         <div class="flex flex-col gap-6">
             <Input
                 id="cardholderName"
@@ -21,7 +27,7 @@ import Input from "./Inpunt.astro";
                 type="text"
                 placeholder="e.g. 1234 5678 9123 0000"
                 error=""
-                maxlength="16"
+                maxlength="19"
                 required={true}
             />
         </div>
@@ -63,7 +69,7 @@ import Input from "./Inpunt.astro";
         </div>
         <button
             type="submit"
-            class="w-full h-10 border rounded-lg text-white bg-[var(--purple-color)]"
+            class="w-full h-10 border rounded-lg text-white bg-[var(--purple-color)] hover:cursor-pointer hover:bg-purple-950"
             >Confirm</button
         >
     </form>
@@ -114,6 +120,83 @@ import Input from "./Inpunt.astro";
                     target.style.borderColor = "var(--error)";
                 }
             });
+        }
+    });
+
+    // 1. CONFIGURACIÓN: Mapeo de IDs (Input -> Preview)
+    // Usamos Record<string, string> para que TypeScript acepte claves dinámicas.
+    const MatchInput: Record<string, string> = {
+        cardholderName: "PreviewName",
+        cardNumber: "PreviewNumber",
+        month: "PreviewMonth",
+        year: "PreviewYear",
+        cvc: "PreviewCvv",
+    };
+
+    // 2. BUCLE PRINCIPAL: Recorremos cada configuración
+    Object.keys(MatchInput).forEach((inputId) => {
+        // Obtenemos las referencias al DOM
+        // "as HTMLInputElement" es vital para que TS sepa que tiene la propiedad .value
+        const inputElement = document.getElementById(
+            inputId,
+        ) as HTMLInputElement | null;
+        const previewId = MatchInput[inputId];
+        const previewElement = document.getElementById(previewId);
+
+        // --- BLOQUE DE DEPURACIÓN (Opcional, para ver si todo conecta) ---
+        if (!inputElement) console.error(`No se encontró input: ${inputId}`);
+        if (!previewElement)
+            console.error(`No se encontró preview: ${previewId}`);
+        if (inputElement && previewElement)
+            console.log(`Conectado: ${inputId} -> ${previewId}`);
+
+        // --- LÓGICA DE ACTUALIZACIÓN ---
+        if (inputElement && previewElement) {
+            // Guardamos el texto original (ej: "0000 0000...") para restaurarlo si borran todo
+            const defaultText = previewElement.textContent;
+
+            /**
+             * FUNCIÓN updateUI
+             * Esta función lee el valor actual del input y actualiza la tarjeta.
+             * La sacamos afuera del evento para poder usarla también al cargar la página.
+             */
+            const updateUI = () => {
+                // CASO ESPECIAL: Si es el número de tarjeta, aplicamos formato
+                if (inputId === "cardNumber") {
+                    // A. Limpiar: Quitamos cualquier cosa que no sea número
+                    const cleanValue = inputElement.value.replace(/\D/g, "");
+
+                    // B. Formatear: Agregamos un espacio cada 4 dígitos
+                    // Regex explicación: /(\d{4})(?=\d)/g -> "Busca grupo de 4 dígitos si hay otro dígito después"
+                    const formattedValue = cleanValue.replace(
+                        /(\d{4})(?=\d)/g,
+                        "$1 ",
+                    );
+
+                    // C. Actualizar Input: Para que el usuario vea los espacios mientras escribe
+                    inputElement.value = formattedValue;
+
+                    // D. Actualizar Preview: Mostramos el valor o el texto por defecto si está vacío
+                    previewElement.textContent =
+                        formattedValue || defaultText || "";
+                }
+                // CASO NORMAL: Para Nombre, Mes, Año, CVC
+                else {
+                    previewElement.textContent =
+                        inputElement.value || defaultText || "";
+                }
+            };
+
+            // 3. EVENTO INPUT: Se ejecuta cada vez que el usuario teclea
+            inputElement.addEventListener("input", () => {
+                console.log(`⌨️ Escribiendo en ${inputId}...`);
+                updateUI(); // Llamamos a nuestra función lógica
+            });
+
+            // 4. INICIALIZACIÓN (El truco para el F5)
+            // Ejecutamos la función una vez al cargar el script.
+            // Si el navegador guardó datos en el input (autocompletado), esto actualiza la card al instante.
+            updateUI();
         }
     });
 </script>

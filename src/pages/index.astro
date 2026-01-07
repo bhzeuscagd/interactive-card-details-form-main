@@ -2,6 +2,7 @@
 import Cards from "../components/Cards.astro";
 import Form from "../components/Form.astro";
 import Layout from "../layouts/Layout.astro";
+import Check from "../components/Check.astro";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -10,4 +11,19 @@ import Layout from "../layouts/Layout.astro";
 <Layout>
 	<Cards />
 	<Form />
+	<Check />
 </Layout>
+
+<script>
+	const formSection = document.getElementById("form");
+	const checkSection = document.getElementById("check");
+	const Form = document.querySelector("form");
+
+	if (formSection && checkSection && Form) {
+		Form.addEventListener("submit", (e) => {
+			e.preventDefault();
+			formSection.classList.add("hidden");
+			checkSection.classList.remove("hidden");
+		});
+	}
+</script>
