@@ -101,14 +101,24 @@ import Input from "./Inpunt.astro";
                     target.style.borderColor = "var(--error)";
                 }
                 //CASO 2. Solo números
-                else if (field.isNumber && /[^0-9]/.test(valor)) {
-                    errorMsg.style.display = "block";
-                    errorMsg.textContent = "Wrong format, numbers only";
-                    target.style.borderColor = "var(--error)";
-                    target.value = valor.replace(/[^0-9]/g, "");
-                } else {
-                    errorMsg.style.display = "none";
-                    target.style.borderColor = "";
+                else if (field.isNumber) {
+                    const isCardNumber = field.id === "cardNumber";
+                    const hasInvalidChars = isCardNumber
+                        ? /[^0-9\s]/.test(valor)
+                        : /[^0-9]/.test(valor);
+
+                    if (hasInvalidChars) {
+                        errorMsg.style.display = "block";
+                        errorMsg.textContent = "Wrong format, numbers only";
+                        target.style.borderColor = "var(--error)";
+                        target.value = valor.replace(
+                            isCardNumber ? /[^0-9\s]/g : /[^0-9]/g,
+                            "",
+                        );
+                    } else {
+                        errorMsg.style.display = "none";
+                        target.style.borderColor = "";
+                    }
                 }
             });
             input.addEventListener("blur", function (e) {
